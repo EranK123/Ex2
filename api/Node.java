@@ -7,18 +7,16 @@ public class Node implements NodeData {
     private int tag;
     private int key;
     private Location nodeLocation;
+    private double weight;
 
-    public Node(int key, int tag, Location nodeLocation){
+    public Node(int key, Location nodeLocation){
         this.key = key;
-        this.tag = tag;
         this.nodeLocation = new Location(nodeLocation.x(), nodeLocation.y(), nodeLocation.z());
-
     }
 
 
     public Node(Node ot){
         this.nodeLocation = ot.nodeLocation;
-        this.tag = ot.tag;
         this.key = ot.key;
     }
 
@@ -44,13 +42,12 @@ public class Node implements NodeData {
 
     @Override
     public double getWeight() {
-        return 0;
-        //No need to implement
+        return this.weight;
     }
 
     @Override
     public void setWeight(double w) {
-        //No need to implement
+        this.weight = w;
     }
 
     @Override

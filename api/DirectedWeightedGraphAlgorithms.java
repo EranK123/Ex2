@@ -50,7 +50,7 @@ public interface DirectedWeightedGraphAlgorithms {
      */
     public double shortestPathDist(int src, int dest);
     /**
-     * Computes the the shortest path between src to dest - as an ordered List of nodes:
+     * Computes the shortest path between src to dest - as an ordered List of nodes:
      * src--> n1-->n2-->...dest
      * see: https://en.wikipedia.org/wiki/Shortest_path_problem
      * Note if no such path --> returns null;
@@ -62,7 +62,7 @@ public interface DirectedWeightedGraphAlgorithms {
 
     /**
      * Finds the NodeData which minimizes the max distance to all the other nodes.
-     * Assuming the graph isConnected, elese return null. See: https://en.wikipedia.org/wiki/Graph_center
+     * Assuming the graph isConnected, else return null. See: https://en.wikipedia.org/wiki/Graph_center
      * @return the Node data to which the max shortest path to all the other nodes is minimized.
      */
     public NodeData center();

@@ -5,7 +5,7 @@ public class Edge implements EdgeData {
     private int src;
     private int dest;
     private double weight;
-    private int tag;
+
 
     public Edge(int src, int dest, double weight) {
         this.src = src;
@@ -17,7 +17,6 @@ public class Edge implements EdgeData {
         this.src = ot.src;
         this.dest = ot.dest;
         this.weight = ot.weight;
-        this.tag = ot.tag;
     }
     @Override
     public int getSrc() {
@@ -49,12 +48,12 @@ public class Edge implements EdgeData {
 
     @Override
     public int getTag() {
-        return this.tag;
+        return 0;
     }
 
     @Override
     public void setTag(int t) {
-        this.tag = t;
+       return;
     }
 
 }
