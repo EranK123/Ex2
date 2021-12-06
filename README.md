@@ -2,19 +2,19 @@
 
 In this assignment we are implementing a Directed Weighted Graph. Given a set of interfaces which include: 
 
-**Location** - This class implements the GeoLocation interface a 3D point i.e x,y,z values.
+**Location** - This class implements the **GeoLocation** interface a 3D point i.e x,y,z values.
 
-**Node** - This class implements the NodeData interface, a vertex in a graph. The node will be represented as a key and a GeoLocation.
+**Node** - This class implements the **NodeData** interface, a vertex in a graph. The node will be represented as a key and a GeoLocation.
 
-**Edge** - This class implements the EdgeData interface, an edge in a graph. The edge will be represented as an index of the source node, index of the destination node and weight of the edge.
+**Edge** - This class implements the **EdgeData** interface, an edge in a graph. The edge will be represented as an index of the source node, index of the destination node and weight of the edge.
 
-**Graph** - This class implements the DirectedWeightedGraph interface. We will represent each graph as two HashMaps. 
+**Graph** - This class implements the **DirectedWeightedGraph** interface. We will represent each graph as two HashMaps. 
 The first HashMap will represent the nodes. The HashMap will consist of an Integer key and a NodeData for the  value. The key will represent the node’s id. The signature will look like this: HashMap<Integer, NodeData>.
 In this way we will have easy access to all the nodes in the graph. Getting a node is executed in O(1) time complexity. Removing a node is also O(1) in this HashMap but in the second HashMap we will need to remove all the edges connected to this node. assuming we have k edges connected, time complexity will be O(k). Adding nodes will also be done in O(1) complexity using HashMap attributes. To iterate over the nodes we can simply use the HashMap iterator. 
 As seen above, we can implement a database to our nodes and use it in the best time complexity possible.
 The second HashMap will represent the edges in the graph. As we know an edge is composed of a source node’s id, destination node’s id and weight. To represent each edge we will construct a HashMap inside a HashMap. The first HashMap will consist of an Integer for the key which will represent a source node’s id, and a HashMap for the value. The latter will consist of an Integer for the key as well which this time will represent a node’s destination id. The value will be an EdgeData. The signature will look like this HashMap<Integer, HashMap<Integer,EdgeData>>. In this way we will have easy access to all the edges of a given source node’s id. Getting and removing an edge will be executed in O(1) complexity assuming we have the node’s source id and node’s destination id. Connecting a new edge will also be done in O(1). Assuming we have both nodes as before and a weight, we can simply access the source node’s edges in the HashMap and then add in the destination position the new edge. To iterate over the edges we can use the HashMap iterator. 
 
-**GraphAlgo** -  This class implements the DirectedWeightedGraphAlgorithms interface. This class represents a directed weighted graph and implements Algorithms including: init, getGraph, copy, isConnected, shortestPathDist, shortestPath, center, tsp(Travelling Salesman Problem)  and save load with JSON file.
+**GraphAlgo** -  This class implements the **DirectedWeightedGraphAlgorithms** interface. This class represents a directed weighted graph and implements Algorithms including: init, getGraph, copy, isConnected, shortestPathDist, shortestPath, center, tsp(Travelling Salesman Problem)  and save load with JSON file.
 The only field in this class will be a Graph which implements DirectedWeightedGraph.
 
 *init* - Initializing the Graph with another given Graph.
