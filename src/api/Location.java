@@ -1,19 +1,23 @@
 package api;
 
+/**
+ * This interface implements GeoLocation which represents the location of a node. <x,y,z>, (aka Point3D data).
+ */
 public class Location implements api.GeoLocation {
     private double x;
     private double y;
     private double z;
 
+    /**
+     * Location init
+     * @param x
+     * @param y
+     * @param z
+     */
     public Location(double x, double y, double z){
         this.x = x;
         this.y = y;
         this.z = z;
-    }
-    public Location(){
-    this.x = 0;
-    this.y = 0;
-    this.z = 0;
     }
 
     @Override
@@ -31,6 +35,11 @@ public class Location implements api.GeoLocation {
         return this.z;
     }
 
+    /**
+     * calculates the distance between two nodes
+     * @param g
+     * @return the distance
+     */
     @Override
     public double distance(api.GeoLocation g) {
         double calc = Math.pow(this.x - g.x(),2) + Math.pow(this.y - g.y(),2) + Math.pow(this.z - g.z(),2);

@@ -1,14 +1,12 @@
 package api;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
@@ -226,18 +224,50 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
 
     @Override
     public boolean load(String file) {
-//        GsonBuilder builder = new GsonBuilder();
-//        builder.registerTypeAdapter(Graph.class, new graphJsonDeserializer());
-//        Gson gson = builder.create();
-//        try {
-//            FileReader reader = new FileReader(file);
-//            directed_weighted_graph graph = gson.fromJson(reader, G.class);
-//            init(graph);
-//            System.out.println(this.getGraph());
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        JsonParser jsonParser = new JsonParser();
+        try (FileReader reader = new FileReader(file))
+        {
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+
+            JsonArray graph = (JsonArray) obj;
+            System.out.println(graph);
+
+            //Iterate over Edges array
+            graph.forEach( edge -> parseEdgeObject( (JsonObject) edge ) );
+            //Iterate over Nodes array
+            graph.forEach(node -> parseNodeObject((JsonObject) node));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
+    private static void parseEdgeObject(JsonObject edges)
+    {
+        //Get employee object within list
+        JsonObject edgeObject = (JsonObject) edges.get("Edges");
 
+        //Get src
+        JsonElement src =  edgeObject.get("src");
+
+        //Get w
+        JsonElement w =  edgeObject.get("w");
+
+        //Get employee website name
+        JsonElement dest =  edgeObject.get("dest");
+    }
+
+    private static void parseNodeObject(JsonObject nodes)
+    {
+        //Get employee object within list
+        JsonObject edgeObject = (JsonObject) nodes.get("Nodes");
+
+        //Get src
+        JsonElement pos =  edgeObject.get("pos");
+        //Get id
+        JsonElement id =  edgeObject.get("id");
+    }
 }

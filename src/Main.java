@@ -31,6 +31,7 @@ public class Main {
         g_algo.getGraph().connect(2,3,5);
         g_algo.getGraph().connect(4,1,3);
         g_algo.getGraph().connect(3,4,2);
-        g_algo.save("SaveJsonFile.txt");
+      g_algo.save("SaveJsonFile.txt");
+       //g_algo.load("SaveJsonFile.txt");
     }
 }
