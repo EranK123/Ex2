@@ -195,6 +195,8 @@ class GraphTest {
         g.connect(1,2,3);
         g.connect(1,3,1);
         assertEquals(g.edgeSize(),2);
+        assertNotEquals(g.edgeSize(),1);
+
     }
 
     @Test

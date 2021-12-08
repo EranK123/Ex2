@@ -1,3 +1,4 @@
+
 import api.*;
 
 import javax.swing.*;
@@ -6,16 +7,18 @@ import java.util.Iterator;
 
 public class Draw extends JPanel {
 
-    Graph gg = new Graph();
-    directedWeightedAlgorithms g_algo = new directedWeightedAlgorithms(gg);
+    private Graph gg;
 
-    public void paintComponent(Graphics g){
+    public Draw(){
+        this.gg = new Graph();
+    }
+
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setBackground(Color.white);
         g.setColor(Color.BLUE);
-
-
-
+        Graph gg = new Graph();
+        GraphAlgo g_algo = new GraphAlgo(gg);
         Location l1 = new Location(15, 300, 3);
         Location l2 = new Location(30.1, 55.6, 3);
         Location l3 = new Location(300, 4, 8);
@@ -40,14 +43,14 @@ public class Draw extends JPanel {
         g_algo.getGraph().connect(3, 4, 2);
 
 
-        for (Iterator<NodeData> it = g_algo.getGraph().nodeIter(); it.hasNext();) {
+        for (Iterator<NodeData> it = g_algo.getGraph().nodeIter(); it.hasNext(); ) {
             NodeData node = it.next();
             g.setColor(Color.BLACK);
-            g.fillOval((int)node.getLocation().x(), (int)node.getLocation().y(), 10,10);
+            g.fillOval((int) node.getLocation().x(), (int) node.getLocation().y(), 10, 10);
         }
 
 
-        for (Iterator<EdgeData> it = g_algo.getGraph().edgeIter(); it.hasNext();) {
+        for (Iterator<EdgeData> it = g_algo.getGraph().edgeIter(); it.hasNext(); ) {
             EdgeData edge = it.next();
             double xSrc = g_algo.getGraph().getNode(edge.getSrc()).getLocation().x();
             double ySrc = g_algo.getGraph().getNode(edge.getSrc()).getLocation().y();
@@ -58,7 +61,8 @@ public class Draw extends JPanel {
 
         }
     }
-    public directedWeightedAlgorithms getGraph(){
-        return this.g_algo;
+    public Graph getGraph(){
+        return this.gg;
     }
+
 }

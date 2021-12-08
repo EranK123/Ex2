@@ -100,45 +100,6 @@ public class Graph implements DirectedWeightedGraph {
 
     @Override
     public Iterator<EdgeData> edgeIter() {
-//        Vector<EdgeData> vector = new Vector<>();
-//        for (int i = 0; i < nodeSize; i++) {
-//            for (int j = 0; j < edges.get(i).size(); j++) {
-//                vector.add((EdgeData) edges.get(i).values());
-//            }
-//        }
-//        return vector.iterator();
-//    }
-//            return new Iterator<EdgeData>() {
-//                private Iterator<HashMap<Integer,EdgeData>> iteratorMain = graph.values().iterator();
-//                private Iterator<EdgeData> iteratorE = iteratorMain.next().values().iterator();
-//                private int modeC = mc;
-//
-//
-//                @Override
-//                public boolean hasNext() {
-//                    if (modeC != mc){
-//                        throw new RuntimeException();
-//                    }
-//                    if (!iteratorE.hasNext()) {
-//                        if (!iteratorMain.hasNext()) {
-//                            return false;
-//                        }
-//                        iteratorE = iteratorMain.next().values().iterator();
-//
-//                    }
-//                    return true;
-
-
-//                @Override
-//                public EdgeData next() {
-//
-//                }
-//
-//                @Override
-//                public void remove(){
-//
-//                }
-//            };
         ArrayList<EdgeData> arrayList = new ArrayList<>();
         for (int node = 0; node < nodeSize; node++){
             Iterator<EdgeData> iterator = edgeIter(node);

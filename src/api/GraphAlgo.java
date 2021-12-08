@@ -1,6 +1,7 @@
 package api;
 
 import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,11 +10,11 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
-public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
+public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     private Graph graph;
 
-    public GraphAlgo(Graph g){
+    public GraphAlgo(Graph g) {
         this.graph = new Graph(g);
     }
 
@@ -47,25 +48,28 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
             }
         }
     }
-    private boolean isStronglyConnected(Graph g, int n){
+
+    private boolean isStronglyConnected(Graph g, int n) {
         for (int i = 0; i < n; i++) {
             boolean[] visited = new boolean[n];
-            dfs(g,i,visited);
-            for (boolean b: visited) {
-                if (!b){
+            dfs(g, i, visited);
+            for (boolean b : visited) {
+                if (!b) {
                     return false;
                 }
             }
         }
         return true;
     }
+
     @Override
     public double shortestPathDist(int src, int dest) {
         set_Tag();
         double[] d = dijkstra(this.graph, this.graph.getNode(src));
         return d[dest];
     }
-    private double[] dijkstra(Graph g, NodeData src){
+
+    private double[] dijkstra(Graph g, NodeData src) {
         double[] dist = new double[g.nodeSize()];
         Set<NodeData> visited = new HashSet<>();
         PriorityQueue<NodeData> p = new PriorityQueue<>(g.nodeSize(), new Comparator<NodeData>() {
@@ -91,7 +95,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
         double current_dis = -1;
         double new_dis = -1;
 
-        for (Iterator<EdgeData> it = this.graph.edgeIter(node.getKey()); it.hasNext();) {
+        for (Iterator<EdgeData> it = this.graph.edgeIter(node.getKey()); it.hasNext(); ) {
             EdgeData e = it.next();
             NodeData node_dest = this.graph.getNode(e.getDest());
 
@@ -104,19 +108,20 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
                     node_dest.setTag(node.getKey());
                 }
             }
-                if (visited.contains(node_dest)){
-                    dist[node_dest.getKey()] = 0;
-                }
-                p.add(new Node((Node) node_dest));
+            if (visited.contains(node_dest)) {
+                dist[node_dest.getKey()] = 0;
             }
+            p.add(new Node((Node) node_dest));
+        }
     }
 
-    private void set_Tag(){
+    private void set_Tag() {
         for (int i = 0; i < graph.nodeSize(); i++) {
             graph.getNode(i).setTag(-1);
         }
     }
-    private void set_weight(){
+
+    private void set_weight() {
         for (int i = 0; i < graph.nodeSize(); i++) {
             graph.getNode(i).setWeight(Integer.MAX_VALUE);
         }
@@ -126,9 +131,9 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
     public List<NodeData> shortestPath(int src, int dest) {
         List<NodeData> list1 = new ArrayList<>();
         List<NodeData> list2 = new ArrayList<>();
-        shortestPathDist(src,dest);
+        shortestPathDist(src, dest);
         int parent = dest;
-        while (parent != src){
+        while (parent != src) {
             list1.add(graph.getNode(parent));
             parent = graph.getNode(dest).getTag();
             dest = graph.getNode(parent).getKey();
@@ -143,12 +148,12 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
 
     @Override
     public NodeData center() {
-        if (!isConnected()){
+        if (!isConnected()) {
             return null;
         }
         double[] maxDist = new double[graph.nodeSize()];
         for (int i = 0; i < graph.nodeSize(); i++) {
-            double[] dist = dijkstra(graph,graph.getNode(i));
+            double[] dist = dijkstra(graph, graph.getNode(i));
             maxDist[i] = max(dist);
         }
         double minDist = min(maxDist);
@@ -161,19 +166,20 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
         return graph.getNode(key);
     }
 
-    private double max(double []a){
+    private double max(double[] a) {
         double max = Integer.MIN_VALUE;
         for (int i = 0; i < a.length; i++) {
-            if (a[i] > max){
+            if (a[i] > max) {
                 max = a[i];
             }
         }
         return max;
     }
-    private double min(double []a){
+
+    private double min(double[] a) {
         double min = Integer.MAX_VALUE;
         for (int i = 0; i < a.length; i++) {
-            if (a[i] < min){
+            if (a[i] < min) {
                 min = a[i];
             }
         }
@@ -193,7 +199,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
         JsonArray nodes = new JsonArray();
         jsonObject.add("Nodes", nodes);
 
-        for(Iterator<EdgeData> iterator = graph.edgeIter(); iterator.hasNext();){
+        for (Iterator<EdgeData> iterator = graph.edgeIter(); iterator.hasNext(); ) {
             EdgeData edge = iterator.next();
             JsonObject object = new JsonObject();
             object.addProperty("src", "" + edge.getSrc());
@@ -202,8 +208,8 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
             edges.add(object);
         }
 
-        for (Iterator<NodeData> iterator = graph.nodeIter(); iterator.hasNext();){
-            NodeData node =  iterator.next();
+        for (Iterator<NodeData> iterator = graph.nodeIter(); iterator.hasNext(); ) {
+            NodeData node = iterator.next();
             JsonObject object = new JsonObject();
             object.addProperty("pos", "" + node.getLocation().x() + "," + node.getLocation().y() + "," +
                     node.getLocation().z());
@@ -225,49 +231,71 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms{
     @Override
     public boolean load(String file) {
         JsonParser jsonParser = new JsonParser();
-        try (FileReader reader = new FileReader(file))
-        {
+        JsonParser jsonParser2 = new JsonParser();
+        try  {
             //Read JSON file
-            Object obj = jsonParser.parse(reader);
+            FileReader reader = new FileReader(file);
+            FileReader reader2 = new FileReader(file);
+            //        JsonObject obj = (JsonObject) jsonParser.parse(reader);
+            JsonReader jsonReader = new JsonReader(reader);
+            JsonReader jsonReader2 = new JsonReader(reader2);
 
-            JsonArray graph = (JsonArray) obj;
+            JsonArray graph2 = (JsonArray) jsonParser2.parse(jsonReader2).getAsJsonObject().get("Nodes");
+            System.out.println(graph2);
+            graph2.forEach(node -> parseNodeObject((JsonObject) node));
+
+            JsonArray graph = (JsonArray) jsonParser.parse(jsonReader).getAsJsonObject().get("Edges");
+
+            //        JsonArray graph = obj.getAsJsonArray();
             System.out.println(graph);
 
             //Iterate over Edges array
             graph.forEach( edge -> parseEdgeObject( (JsonObject) edge ) );
             //Iterate over Nodes array
-            graph.forEach(node -> parseNodeObject((JsonObject) node));
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return true;
     }
-    private static void parseEdgeObject(JsonObject edges)
+    private void parseEdgeObject(JsonObject edges)
     {
         //Get employee object within list
-        JsonObject edgeObject = (JsonObject) edges.get("Edges");
+//        JsonObject edgeObject = edges;
+
 
         //Get src
-        JsonElement src =  edgeObject.get("src");
+//        JsonElement src =  edgeObject.get("src");
+        int src = edges.get("src").getAsInt();
 
         //Get w
-        JsonElement w =  edgeObject.get("w");
-
+//        JsonElement w =  edgeObject.get("w");
+        double w = edges.get("w").getAsDouble();
         //Get employee website name
-        JsonElement dest =  edgeObject.get("dest");
-    }
+//        JsonElement dest =  edgeObject.get("dest");
+        int dest = edges.get("dest").getAsInt();
 
-    private static void parseNodeObject(JsonObject nodes)
+        graph.connect(src, dest, w);
+    }
+    private void parseNodeObject(JsonObject nodes)
     {
         //Get employee object within list
-        JsonObject edgeObject = (JsonObject) nodes.get("Nodes");
-
+//        JsonObject edgeObject = (JsonObject) nodes.get("Nodes");
+//        JsonObject edgeObject = nodes;
         //Get src
-        JsonElement pos =  edgeObject.get("pos");
+//        JsonElement pos =  edgeObject.get("pos");
         //Get id
-        JsonElement id =  edgeObject.get("id");
+//        JsonElement id =  edgeObject.get("id");
+        int key = nodes.get("id").getAsInt();
+        JsonElement location = nodes.get("pos");
+        String s = location.getAsString();
+        String arr[] = s.split(",");
+        double x = Double.parseDouble(arr[0]);
+        double y = Double.parseDouble(arr[1]);
+        double z = Double.parseDouble(arr[2]);
+        GeoLocation pos = new Location(x, y, z);
+        NodeData n = new Node(key, (Location) pos);
+        graph.addNode(n);
     }
 }
