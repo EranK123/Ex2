@@ -101,10 +101,12 @@ public class Graph implements DirectedWeightedGraph {
     @Override
     public Iterator<EdgeData> edgeIter() {
         ArrayList<EdgeData> arrayList = new ArrayList<>();
-        for (int node = 0; node < nodeSize; node++){
-            Iterator<EdgeData> iterator = edgeIter(node);
-            while (iterator.hasNext())
-                arrayList.add(iterator.next());
+        for (int node = 0; node < nodeSize; node++) {
+            if (this.edges.containsKey(node)) {
+                Iterator<EdgeData> iterator = edgeIter(node);
+                while (iterator.hasNext())
+                    arrayList.add(iterator.next());
+            }
         }
         return arrayList.iterator();
     }
@@ -113,10 +115,13 @@ public class Graph implements DirectedWeightedGraph {
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
         int temp = mc;
-        Iterator<EdgeData> iterator = this.edges.get(node_id).values().iterator();
-        if (temp != mc){
-            throw new RuntimeException();
+        if (!this.edges.containsKey(node_id)) {
+            return null;
         }
+            Iterator<EdgeData> iterator = this.edges.get(node_id).values().iterator();
+            if (temp != mc) {
+                throw new RuntimeException();
+            }
         return iterator;
     }
 
@@ -125,13 +130,22 @@ public class Graph implements DirectedWeightedGraph {
         if (nodes.get(key) == null) {
             return null;
         }
+        int count=0;
         Node n = new Node((Node) nodes.get(key));
-        int removedSize = edges.get(key).size();
+        Iterator<EdgeData> edgeDataIterator = edgeIter();
+        while (edgeDataIterator.hasNext()){
+            EdgeData edge = edgeDataIterator.next();
+            if (edges.get(edge.getSrc()).containsKey(n.getKey()) || edges.get(edge.getDest()).containsKey(n.getKey())){
+                System.out.println(edge.getSrc() + "  " + edge.getDest());
+                this.edges.get(edge.getSrc()).remove(key);
+                count++;
+            }
+        }
+        edgeSize -= count;
+        mc += count;
         this.nodes.remove(key);
         edges.remove(key);
         nodeSize--;
-        edgeSize -= removedSize;
-        mc++;
         return n;
     }
 
