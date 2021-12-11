@@ -40,6 +40,10 @@ We will use the dijkstra method of each node to compute the distances to all nod
 
 *load*-  reads the json file given by the function and initializes the data to a graph. Returning true if successful, false if not.
 
+For each function defined in the main classes Graph and GraphAlgo we will make a test in Junit. We will create a graph and test all the functions. The testers are extremely useful to check the functions on the go, so we can check each method before using it in other functions.
+
+
+
 
 
 
