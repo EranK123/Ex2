@@ -55,6 +55,13 @@ Here are the results for running the algorithm on 1000, 10000 and 100000 nodes:
 | tsp - | tsp - | tsp - |
 
 
+In addition to the graph implementation, we have implemented a graphical user interface using java swing library. Using the classes Draw, Menu, DisplayMessage and GUI there is a functional user interface that displays a graph. The interface allows the user to load a graph from a json file and display it. Save a graph to a json file. Edit the graph and run algorithms on it. This all can be done with the help of the classes we created.  
+**Draw**: draws the graph in a 2d manor, displaying the nodes of the graph and the edges.
+**Menu**: adds a menu. The user can do actions on the graph via the menu like the actions specified above.
+**DisplayMessage**: a help class that allows pop ups messages. Only used in Menu.
+**GUI**: the class that takes charge of combining all the class functionalities to one function in the graph called run. In this function we create a new Draw and a new Menu and add it to the main frame. Finally when we run this method the full frame with the graph and the menu should appear.
+
+
 
 
    
