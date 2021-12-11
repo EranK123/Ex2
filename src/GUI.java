@@ -10,18 +10,25 @@ import java.util.Iterator;
 
 public class GUI extends JFrame {
 
+    private final GraphAlgo graphAlgo;
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        MenuBar menuBar = new MenuBar();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Draw draw = new Draw();
-        Menu menu = new Menu(draw.getGraph());
-        menu.setMenuBar(menuBar);
-        frame.setSize(400, 400);
-        menu.add(draw);
-        frame.add(menu);
-        frame.setVisible(true);
 
+    public void run(){
+        Draw draw = new Draw((Graph) graphAlgo.getGraph());
+        Menu menu = new Menu((Graph) graphAlgo.getGraph());
+        this.setJMenuBar(menu.getMenuBar());
+        setVisible(true);
+        this.add(draw);
+        setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.repaint();
+        this.setVisible(true);
     }
+
+    public GUI(GraphAlgo g){
+        this.graphAlgo = g;
+    }
+
 }

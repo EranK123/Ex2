@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -13,12 +14,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 
-class Menu extends JFrame {
-    private Graph g = new Graph();
-    private  GraphAlgo graphAlgo = new GraphAlgo(g);
-
+class Menu extends JMenuBar {
+    private GraphAlgo graphAlgo;
+    private JMenuBar menuBar;
     public Menu(Graph g){
         this.graphAlgo = new GraphAlgo(g);
+
         initUI();
     }
 
@@ -30,16 +31,15 @@ class Menu extends JFrame {
 
         createMenuBar();
 
-        setTitle("Simple menu");
         setVisible(true);
         setSize(500, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        setLocationRelativeTo(null);
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     private void createMenuBar() {
 
-        JMenuBar menuBar = new JMenuBar();
+        menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Actions Menu");
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
@@ -62,26 +62,42 @@ class Menu extends JFrame {
         buttonLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
-                JPanel panel = new JPanel();
-                panel.setSize(50, 50);
-                frame.setSize(300, 300);
-                panel.setVisible(true);
-                frame.setVisible(true);
-                JLabel label = new JLabel("Enter File Name");
-                JTextField tf = new JTextField(30);
-                String s = tf.getText();
-                JButton enter = new JButton("Send");
-                enter.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        graphAlgo.load(s);
-                    }
-                });
-                panel.add(label);
-                panel.add(enter);
-                panel.add(tf);
-                frame.add(panel);
+//                JFrame frame = new JFrame();
+//                JPanel panel = new JPanel();
+//                panel.setSize(50, 50);
+//                frame.setSize(300, 300);
+//                panel.setVisible(true);
+//                frame.setVisible(true);
+//                JLabel label = new JLabel("Enter File Name");
+//                JTextField tf = new JTextField(10);
+//                String s = tf.getText();
+                JFileChooser fileChooser = new JFileChooser();
+                int r = fileChooser.showOpenDialog(null);
+//                if (r == JFileChooser.APPROVE_OPTION){
+//                    File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+//                    System.out.println(file);
+//                    graphAlgo.load("" + file);
+//                    GUI gui = new GUI(graphAlgo);
+//                    gui.run();
+//                }
+                if (r == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                }
+
+
+//                JButton enter = new JButton("Send");
+//                enter.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        graphAlgo.load(s);
+//                        GUI gui = new GUI(graphAlgo);
+//                        gui.run();
+//                    }
+//                });
+//                panel.add(label);
+//                panel.add(enter);
+//                panel.add(tf);
+//                frame.add(panel);
             }
         });
 
@@ -91,7 +107,7 @@ class Menu extends JFrame {
                 JFrame frame = new JFrame();
                 JPanel panel = new JPanel();
                 panel.setSize(50, 50);
-                frame.setSize(300, 300);
+                frame.setSize(400, 400);
                 panel.setVisible(true);
                 frame.setVisible(true);
                 JLabel label = new JLabel("Enter File Name");
@@ -155,6 +171,8 @@ class Menu extends JFrame {
                         Location location = new Location(posVal[0], posVal[1], posVal[2]);
                         Node node = new Node(id, location);
                         graphAlgo.getGraph().addNode(node);
+                        GUI gui = new GUI(graphAlgo);
+                        gui.run();
                     }
                 });
                 panelID.add(labelID);
@@ -169,7 +187,6 @@ class Menu extends JFrame {
 
             });
             removeNode.addActionListener(e13 -> {
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 setSize(new Dimension(300, 300));
                 JFrame frame1 = new JFrame();
                 frame1.setSize(400, 400);
@@ -184,8 +201,9 @@ class Menu extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         int id = Integer.parseInt(tfID.getText());
-                        NodeData n =  graphAlgo.getGraph().removeNode(id);
-                        System.out.println(n.getKey());
+                        graphAlgo.getGraph().removeNode(id);
+                        GUI gui = new GUI(graphAlgo);
+                        gui.run();
                     }
                 });
                 panelID.add(labelID);
@@ -196,7 +214,6 @@ class Menu extends JFrame {
 
             addEdge.addActionListener(e13 -> {
                 JPanel panel2 = new JPanel(new GridLayout());
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 setSize(new Dimension(300, 300));
                 JFrame frame1 = new JFrame();
                 frame1.setSize(400, 400);
@@ -224,6 +241,8 @@ class Menu extends JFrame {
                         int dest = Integer.parseInt(tfDest.getText());
                         double weight = Double.parseDouble(tfWeight.getText());
                         graphAlgo.getGraph().connect(source,dest,weight);
+                        GUI gui = new GUI(graphAlgo);
+                        gui.run();
                     }
                 });
                 panelSource.add(labelSource);
@@ -241,7 +260,6 @@ class Menu extends JFrame {
 
             removeEdge.addActionListener(e13 -> {
                 JPanel panel2 = new JPanel(new GridLayout());
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 setSize(new Dimension(300, 300));
                 JFrame frame1 = new JFrame();
                 frame1.setSize(400, 400);
@@ -264,6 +282,8 @@ class Menu extends JFrame {
                         int dest = Integer.parseInt(tfDest.getText());
                         EdgeData edgeData = graphAlgo.getGraph().removeEdge(source,dest);
                         System.out.println(edgeData);
+                        GUI gui = new GUI(graphAlgo);
+                        gui.run();
                     }
                 });
                 panelSource.add(labelSource);
@@ -282,8 +302,8 @@ class Menu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JPanel panel2 = new JPanel(new GridLayout());
                 JFrame frame = new JFrame();
-                panel2.setSize(100, 100);
-                frame.setSize(300, 300);
+                panel2.setSize(300, 300);
+                frame.setSize(500, 500);
                 panel2.setVisible(true);
                 frame.setVisible(true);
                 JButton isConnected = new JButton("isConnected");
@@ -296,7 +316,7 @@ class Menu extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                        boolean is = graphAlgo.isConnected();
-                        System.out.println(is);
+                       new DisplayMessage("" + is);
                     }
                 });
                 shortestPathDist.addActionListener(new ActionListener() {
@@ -322,7 +342,8 @@ class Menu extends JFrame {
                             public void actionPerformed(ActionEvent e) {
                                 int source = Integer.parseInt(tfSource.getText());
                                 int dest = Integer.parseInt(tfDest.getText());
-                                graphAlgo.shortestPathDist(source,dest);
+                                double path = graphAlgo.shortestPathDist(source,dest);
+                                new DisplayMessage("" + path);
                             }
                         });
                         panelSource.add(labelSource);
@@ -359,7 +380,16 @@ class Menu extends JFrame {
                             public void actionPerformed(ActionEvent e) {
                                 int source = Integer.parseInt(tfSource.getText());
                                 int dest = Integer.parseInt(tfDest.getText());
-                                graphAlgo.shortestPath(source,dest);
+                                List<NodeData> list = graphAlgo.shortestPath(source,dest);
+                                int[] keys = new int[list.size()];
+                                for (int i = 0; i < keys.length; i++) {
+                                    keys[i] = list.get(i).getKey();
+                                }
+                                String s = "";
+                                for (int i = 0; i < keys.length; i++) {
+                                     s += keys[i] + "->";
+                                }
+                                new DisplayMessage(s);
                             }
                         });
                         panelSource.add(labelSource);
@@ -376,7 +406,7 @@ class Menu extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                        NodeData n = graphAlgo.center();
-                        System.out.println(n.getKey());
+                        new DisplayMessage("" + n.getKey());
                     }
                 });
                 tsp.addActionListener(new ActionListener() {
@@ -389,7 +419,7 @@ class Menu extends JFrame {
                         panel.setVisible(true);
                         frame.setVisible(true);
                         JLabel label = new JLabel("Enter nodes id");
-                        JTextField tf = new JTextField(30);
+                        JTextField tf = new JTextField(20);
                         JButton send = new JButton("Send");
                         send.addActionListener(new ActionListener() {
                             @Override
@@ -401,7 +431,16 @@ class Menu extends JFrame {
                                     int id = Integer.parseInt(ids[i]);
                                     cities.add(graphAlgo.getGraph().getNode(id));
                                 }
-                                graphAlgo.tsp(cities);
+                               List<NodeData> list = graphAlgo.tsp(cities);
+                                int[] keys = new int[list.size()];
+                                for (int i = 0; i < keys.length; i++) {
+                                    keys[i] = list.get(i).getKey();
+                                }
+                                String s1 = "";
+                                for (int i = 0; i < keys.length; i++) {
+                                    s1 += keys[i] + "->";
+                                }
+                                new DisplayMessage(s1);
                             }
                         });
                         panel.add(label);
@@ -419,9 +458,10 @@ class Menu extends JFrame {
             }
 
         });
+    }
 
-
-        setJMenuBar(menuBar);
+    public JMenuBar getMenuBar(){
+        return this.menuBar;
     }
 
     public static void main(String[] args) {

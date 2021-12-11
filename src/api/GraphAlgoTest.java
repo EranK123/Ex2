@@ -99,81 +99,92 @@ class GraphAlgoTest {
 
     @Test
     void isConnectedTest() {
-        Graph g = new Graph();
-        GraphAlgo g_algo = new GraphAlgo(g);
-        Graph graph2 = new Graph();
-        Location l1 = new Location(1,2,3);
-        Location l2 = new Location(3,5,3);
-        Location l3 = new Location(5,4,8);
-        Location l4 = new Location(6,1,8);
-        Location l5 = new Location(2,7,1);
-        Node n1 = new Node(0,l1);
-        Node n2 = new Node(1,l2);
-        Node n3 = new Node(2,l3);
-        Node n4 = new Node(3,l4);
-        Node n5 = new Node(4,l5);
-        g_algo.getGraph().addNode(n1);
-        g_algo.getGraph().addNode(n2);
-        g_algo.getGraph().addNode(n3);
-        g_algo.getGraph().addNode(n4);
-        g_algo.getGraph().addNode(n5);
-        g_algo.getGraph().connect(0,1,1);
-        g_algo.getGraph().connect(3,0,3);
-        g_algo.getGraph().connect(0,2,2);
-        g_algo.getGraph().connect(1,3,4);
-        g_algo.getGraph().connect(2,3,1);
-        g_algo.getGraph().connect(2,3,5);
-        g_algo.getGraph().connect(4,1,3);
-        g_algo.getGraph().connect(3,4,2);
-        boolean b1 = g_algo.isConnected();
-        assertTrue(b1);
-        graph2.addNode(n1);
-        graph2.addNode(n2);
-        graph2.addNode(n3);
-        graph2.connect(0, 1, 1.8);
-        graph2.connect(0, 2, 2);
-        GraphAlgo graphAlgo2 = new GraphAlgo(graph2);
-        boolean b2 = graphAlgo2.isConnected();
-        assertFalse(b2);
-        Graph g3 = new Graph();
-        GraphAlgo g_algo3 = new GraphAlgo(g3);
-        g_algo3.load("1000Nodes.json");
-        assertEquals(g_algo3.isConnected(),true);
+//        Graph g = new Graph();
+//        GraphAlgo g_algo = new GraphAlgo(g);
+//        Graph graph2 = new Graph();
+//        Location l1 = new Location(1,2,3);
+//        Location l2 = new Location(3,5,3);
+//        Location l3 = new Location(5,4,8);
+//        Location l4 = new Location(6,1,8);
+//        Location l5 = new Location(2,7,1);
+//        Node n1 = new Node(0,l1);
+//        Node n2 = new Node(1,l2);
+//        Node n3 = new Node(2,l3);
+//        Node n4 = new Node(3,l4);
+//        Node n5 = new Node(4,l5);
+//        g_algo.getGraph().addNode(n1);
+//        g_algo.getGraph().addNode(n2);
+//        g_algo.getGraph().addNode(n3);
+//        g_algo.getGraph().addNode(n4);
+//        g_algo.getGraph().addNode(n5);
+//        g_algo.getGraph().connect(0,1,1);
+//        g_algo.getGraph().connect(3,0,3);
+//        g_algo.getGraph().connect(0,2,2);
+//        g_algo.getGraph().connect(1,3,4);
+//        g_algo.getGraph().connect(2,3,1);
+//        g_algo.getGraph().connect(2,3,5);
+//        g_algo.getGraph().connect(4,1,3);
+//        g_algo.getGraph().connect(3,4,2);
+//        boolean b1 = g_algo.isConnected();
+//        assertTrue(b1);
+//        graph2.addNode(n1);
+//        graph2.addNode(n2);
+//        graph2.addNode(n3);
+//        graph2.connect(0, 1, 1.8);
+//        graph2.connect(0, 2, 2);
+//        GraphAlgo graphAlgo2 = new GraphAlgo(graph2);
+//        boolean b2 = graphAlgo2.isConnected();
+//        assertFalse(b2);
+//        Graph g3 = new Graph();
+//        GraphAlgo g_algo3 = new GraphAlgo(g3);
+//        g_algo3.load("1000Nodes.json");
+//        assertEquals(g_algo3.isConnected(),true);
+//        Graph g4 = new Graph();
+//        GraphAlgo g_algo4 = new GraphAlgo(g4);
+//        g_algo4.load("10000Nodes_1.json");
+//        assertEquals(g_algo4.isConnected(),true);
+        Graph g5 = new Graph();
+        GraphAlgo g_algo5 = new GraphAlgo(g5);
+        g_algo5.load("100000.json");
+        assertEquals(g_algo5.isConnected(),true);
     }
 
     @Test
     void shortestPathDistTest() {
-        Graph g = new Graph();
-        GraphAlgo g_algo = new GraphAlgo(g);
-        Location l1 = new Location(1,2,3);
-        Location l2 = new Location(3,5,3);
-        Location l3 = new Location(5,4,8);
-        Location l4 = new Location(6,1,8);
-        Location l5 = new Location(2,7,1);
-        Node n1 = new Node(0,l1);
-        Node n2 = new Node(1,l2);
-        Node n3 = new Node(2,l3);
-        Node n4 = new Node(3,l4);
-        Node n5 = new Node(4,l5);
-        g_algo.getGraph().addNode(n1);
-        g_algo.getGraph().addNode(n2);
-        g_algo.getGraph().addNode(n3);
-        g_algo.getGraph().addNode(n4);
-        g_algo.getGraph().addNode(n5);
-        g_algo.getGraph().connect(0,1,1);
-        g_algo.getGraph().connect(3,0,3);
-        g_algo.getGraph().connect(0,2,2);
-        g_algo.getGraph().connect(1,3,4);
-        g_algo.getGraph().connect(2,3,1);
-        g_algo.getGraph().connect(2,3,5);
-        g_algo.getGraph().connect(4,1,3);
-        g_algo.getGraph().connect(3,4,2);
-        assertEquals(g_algo.shortestPathDist(0, 3), 5);
-        assertEquals(g_algo.shortestPathDist(0, 2), 2);
-        assertEquals(g_algo.shortestPathDist(1, 2), 9);
-        assertEquals(g_algo.shortestPathDist(2,3), 5);
-        assertEquals(g_algo.shortestPathDist(0,4), 7);
-
+//        Graph g = new Graph();
+//        GraphAlgo g_algo = new GraphAlgo(g);
+//        Location l1 = new Location(1,2,3);
+//        Location l2 = new Location(3,5,3);
+//        Location l3 = new Location(5,4,8);
+//        Location l4 = new Location(6,1,8);
+//        Location l5 = new Location(2,7,1);
+//        Node n1 = new Node(0,l1);
+//        Node n2 = new Node(1,l2);
+//        Node n3 = new Node(2,l3);
+//        Node n4 = new Node(3,l4);
+//        Node n5 = new Node(4,l5);
+//        g_algo.getGraph().addNode(n1);
+//        g_algo.getGraph().addNode(n2);
+//        g_algo.getGraph().addNode(n3);
+//        g_algo.getGraph().addNode(n4);
+//        g_algo.getGraph().addNode(n5);
+//        g_algo.getGraph().connect(0,1,1);
+//        g_algo.getGraph().connect(3,0,3);
+//        g_algo.getGraph().connect(0,2,2);
+//        g_algo.getGraph().connect(1,3,4);
+//        g_algo.getGraph().connect(2,3,1);
+//        g_algo.getGraph().connect(2,3,5);
+//        g_algo.getGraph().connect(4,1,3);
+//        g_algo.getGraph().connect(3,4,2);
+//        assertEquals(g_algo.shortestPathDist(0, 3), 5);
+//        assertEquals(g_algo.shortestPathDist(0, 2), 2);
+//        assertEquals(g_algo.shortestPathDist(1, 2), 9);
+//        assertEquals(g_algo.shortestPathDist(2,3), 5);
+//        assertEquals(g_algo.shortestPathDist(0,4), 7);
+        Graph g1 = new Graph();
+        GraphAlgo g_algo1 = new GraphAlgo(g1);
+        g_algo1.load("100000.json");
+        assertEquals(g_algo1.shortestPathDist(54,350),3);
     }
 
     @Test
@@ -208,6 +219,7 @@ class GraphAlgoTest {
         list1.add(n4);
         list1.add(n5);
         assertEquals(g_algo.shortestPath(0, 4), list1);
+
     }
 
     @Test

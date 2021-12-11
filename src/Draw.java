@@ -1,68 +1,80 @@
-
 import api.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Iterator;
 
-public class Draw extends JPanel {
+public class Draw extends JComponent {
+    public static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2);
+    public static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2);
+    private final GraphAlgo graphAlgo;
 
-    private Graph gg;
-
-    public Draw(){
-        this.gg = new Graph();
+    public Draw(Graph g) {
+        this.setLayout(new BorderLayout());
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        graphAlgo = new GraphAlgo(g);
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setBackground(Color.white);
         g.setColor(Color.BLUE);
-        Graph gg = new Graph();
-        GraphAlgo g_algo = new GraphAlgo(gg);
-        Location l1 = new Location(15, 300, 3);
-        Location l2 = new Location(30.1, 55.6, 3);
-        Location l3 = new Location(300, 4, 8);
-        Location l4 = new Location(100, 150, 8);
-        Location l5 = new Location(150, 70, 1);
-        Node n1 = new Node(0, l1);
-        Node n2 = new Node(1, l2);
-        Node n3 = new Node(2, l3);
-        Node n4 = new Node(3, l4);
-        Node n5 = new Node(4, l5);
-        g_algo.getGraph().addNode(n1);
-        g_algo.getGraph().addNode(n2);
-        g_algo.getGraph().addNode(n3);
-        g_algo.getGraph().addNode(n4);
-        g_algo.getGraph().addNode(n5);
-        g_algo.getGraph().connect(0, 1, 1);
-        g_algo.getGraph().connect(3, 0, 3);
-//        g_algo.getGraph().connect(0, 2, 2);
-        g_algo.getGraph().connect(1, 3, 4);
-//        g_algo.getGraph().connect(2, 3, 5);
-        g_algo.getGraph().connect(4, 1, 3);
-        g_algo.getGraph().connect(3, 4, 2);
+        Iterator<NodeData> nodeIter = graphAlgo.getGraph().nodeIter();
+        double xMax = Integer.MIN_VALUE, xMin = Integer.MAX_VALUE, yMax = Integer.MIN_VALUE, yMin = Integer.MAX_VALUE;
+        while (nodeIter.hasNext()) {
+            NodeData n = nodeIter.next();
+            if (n.getLocation().x() > xMax) {
+                xMax = n.getLocation().x();
+            }
+            if (n.getLocation().x() < xMin) {
+                xMin = n.getLocation().x();
+            }
+            if (n.getLocation().y() > yMax) {
+                yMax = n.getLocation().y();
+            }
+            if (n.getLocation().y() < yMin) {
+                yMin = n.getLocation().y();
+            }
 
 
-        for (Iterator<NodeData> it = g_algo.getGraph().nodeIter(); it.hasNext(); ) {
+        }
+        for (Iterator<NodeData> it = graphAlgo.getGraph().nodeIter(); it.hasNext(); ) {
             NodeData node = it.next();
+            double x = node.getLocation().x() - xMin;
+            double y = node.getLocation().y() - yMin;
+
+            int placeX = (int) ((x / (xMax - xMin)) * (WIDTH * 0.8)) + (int) (0.06 * WIDTH);
+            int placeY = (int) ((y / (yMax - yMin)) * (HEIGHT * 0.8)) + (int) (0.06 * 500);
             g.setColor(Color.BLACK);
-            g.fillOval((int) node.getLocation().x(), (int) node.getLocation().y(), 10, 10);
+            g.fillOval(placeX, placeY, 10, 10);
+            g.drawString(""+ node.getKey(), placeX - 5, placeY -5);
         }
 
-
-        for (Iterator<EdgeData> it = g_algo.getGraph().edgeIter(); it.hasNext(); ) {
+        for (Iterator<EdgeData> it = graphAlgo.getGraph().edgeIter(); it.hasNext(); ) {
             EdgeData edge = it.next();
-            double xSrc = g_algo.getGraph().getNode(edge.getSrc()).getLocation().x();
-            double ySrc = g_algo.getGraph().getNode(edge.getSrc()).getLocation().y();
-            double xDest = g_algo.getGraph().getNode(edge.getDest()).getLocation().x();
-            double yDest = g_algo.getGraph().getNode(edge.getDest()).getLocation().y();
+            double xSrc = graphAlgo.getGraph().getNode(edge.getSrc()).getLocation().x() - xMin;
+            double ySrc = graphAlgo.getGraph().getNode(edge.getSrc()).getLocation().y() - yMin;
+            double xDest = graphAlgo.getGraph().getNode(edge.getDest()).getLocation().x() - xMin;
+            double yDest = graphAlgo.getGraph().getNode(edge.getDest()).getLocation().y() - yMin;
+
+            int placeSrcX = (int) ((xSrc / (xMax - xMin)) * (WIDTH * 0.8)) + (int) (0.065 * WIDTH);
+            int placeDestX = (int) ((xDest / (xMax - xMin)) * (WIDTH * 0.8)) + (int) (0.065 * WIDTH);
+            int placeSrcY = (int) ((ySrc / (yMax - yMin)) * (HEIGHT * 0.8)) + 35;
+            int placeDestY = (int) ((yDest / (yMax - yMin)) * (HEIGHT * 0.8)) + 35;
+
             g.setColor(Color.red);
-            g.drawLine((int) xSrc, (int) ySrc, (int) xDest, (int) yDest);
+            g.drawLine(placeSrcX, placeSrcY, placeDestX, placeDestY);
+            Font f = g.getFont().deriveFont(8.f);
+            g.setFont(f);
+            g.drawString("" + edge.getWeight(), placeSrcX , placeDestY);
 
         }
+
     }
-    public Graph getGraph(){
-        return this.gg;
+
+    public Graph getGraph() {
+        return (Graph) this.graphAlgo.getGraph();
     }
 
 }
