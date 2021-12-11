@@ -46,14 +46,10 @@ For each function defined in the main classes Graph and GraphAlgo we will make a
 Here are the results for running the algorithm on 1000, 10000 and 100000 nodes:
 
    
-| 1000 Nodes  | 10000 Nodes | | 100000 Nodes |
-
-| ------------- | ------------- || ---------- |
-
-| isConnected - 777 ms| isConnected -   | |isConnected -    |
-
-| shortestPathDist -   | shortestPathDist -  | |       |
-
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
 
 
 
