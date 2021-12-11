@@ -50,7 +50,7 @@ Here are the results for running the algorithm on 1000, 10000 and 100000 nodes:
 | --------------- | --------------- | --------------- |
 | isConnected - 777 ms | isConnected - 50 sec 230 ms | isConnected - over 10 minutes |
 | shortestPathDist - 1 sec 25 ms| shortestPathDist - 12 sec 7 ms| shortestPathDist -  OutOfMemoryError|
-| shortestPath - | shortestPath - | shortestPath - |
+| shortestPath - 1 sec 280 ms| shortestPath - 12 sec| shortestPath - OutOfMemoryError|
 | center - | center - | center - |
 | tsp - | tsp - | tsp - |
 
