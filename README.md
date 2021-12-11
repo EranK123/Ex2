@@ -46,10 +46,10 @@ For each function defined in the main classes Graph and GraphAlgo we will make a
 Here are the results for running the algorithm on 1000, 10000 and 100000 nodes:
 
    
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| 1000 Nodes  | 10000 Nodes | | 100000 Nodes | 
+| ------------- | ------------- | | ---------- |
+| isConnected - 777 ms  | isConnected -   | |    |
+| shortestPathDist -   | shortestPathDist -  | |      |
 
 
 
