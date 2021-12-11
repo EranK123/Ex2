@@ -48,9 +48,11 @@ Here are the results for running the algorithm on 1000, 10000 and 100000 nodes:
    
 | 1000 Nodes | 10000 Nodes | 100000 Nodes |
 | :---         |     :---:      |          ---: |
-| isConnected - 777 ms   | isConnected - 50 sec 230 ms    | git status    |
-| ShortestPathDist -      | ShortestPathDist -        | git diff      |
-| ShortestPath -     | ShortestPath -        |
+| isConnected - 777 ms   | isConnected - 50 sec 230 ms    | isConnected -     |
+| shortestPathDist -      | shortestPathDist -        | shortestPathDist -     |
+| shortestPath -     | shortestPath -        |        | shortestPath -          |
+| center -          | center -               |        | center -           |
+
 
 
    
