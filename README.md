@@ -43,6 +43,13 @@ We will use the dijkstra method of each node to compute the distances to all nod
 For each function defined in the main classes Graph and GraphAlgo we will make a test in Junit. We will create a graph and test all the functions. The testers are extremely useful to check the functions on the go, so we can check each method before using it in other functions.
 
 
+Here are the results for running the algorithm on 1000, 10000 and 100000 nodes:
+
+   
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
 
 
 
