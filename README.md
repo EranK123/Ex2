@@ -53,7 +53,7 @@ Here are the results for running the algorithm on 1000, 10000 and 100000 nodes:
 | shortestPathDist - 281 ms| shortestPathDist - 805 ms| shortestPathDist -  9 sec 619 ms|
 | shortestPath - 232 ms| shortestPath - 743 ms| shortestPath - 10 sec 250 ms|
 | center - 2 sec| center - 3 min 23 sec| center - timeout|
-| tsp - | tsp - | tsp - |
+| tsp - 837 ms| tsp - 46 sec 730 ms| tsp - timeout|
 
 
 In addition to the graph implementation, we have implemented a graphical user interface using java swing library. Using the classes Draw, Menu, DisplayMessage and GUI there is a functional user interface that displays a graph. The interface allows the user to load a graph from a json file and display it. Save a graph to a json file. Edit the graph and run algorithms on it. This all can be done with the help of the classes we created.  
