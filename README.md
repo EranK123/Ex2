@@ -49,9 +49,9 @@ Here are the results for running the algorithm on 1000, 10000 and 100000 nodes:
 | 1000 Nodes | 10000 Nodes  | 100000 Nodes |
 | --------------- | --------------- | --------------- |
 | isConnected - 777 ms | isConnected - 50 sec 230 ms | isConnected - over 10 minutes |
-| shortestPathDist - 1 sec 25 ms| shortestPathDist - 12 sec 7 ms| shortestPathDist -  OutOfMemoryError|
-| shortestPath - 1 sec 280 ms| shortestPath - 12 sec| shortestPath - OutOfMemoryError|
-| center - | center - | center - |
+| shortestPathDist - 281 ms| shortestPathDist - 805 ms| shortestPathDist -  9 sec 619 ms|
+| shortestPath - 232 ms| shortestPath - 743 ms| shortestPath - 10 sec 250 ms|
+| center - 2 sec| center - 3 min 23 sec| center - timeout|
 | tsp - | tsp - | tsp - |
 
 
