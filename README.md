@@ -24,7 +24,7 @@ The only field in this class will be a Graph which implements DirectedWeightedGr
 *copy* - Deep copies a graph. Returns it.
 
 *isConnected* - Checks if the directed graph is connected, in other words, there is an existing route from each node to any other node in the graph. Another explanation is that the graph is one strongly connected component. Returns true or false if connected or not.
-We will use the Depth-First Search algorithm. Depth-first search is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at selecting some arbitrary node as the root node in the case of a graph and explores as far as possible along each branch before backtracking.
+We will use the Breadth-First Search algorithm. Breadth-first search is an algorithm for traversing or searching tree or graph data structures. The algorithm should start traversing from a selected node (source or starting node) and traverse the graph layerwise thus exploring the neighbour nodes (nodes which are directly connected to source node). You must then move towards the next-level neighbour nodes.
 
 *shortestPathDist* - Computes the lengh of shortest path between a source node to a destination node and returns it. This will be determined by the weights of the edges.
 We will use the Dijkstra Algorithm. This algorithm finds the shortest path between node a and node b. It picks the source node, calculates the distance through it to each unvisited neighbor, and updates the neighbor's distance if smaller. Mark visited when done with neighbors. 
