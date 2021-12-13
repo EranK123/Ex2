@@ -69,9 +69,9 @@ In addition to the graph implementation, we have implemented a graphical user in
 
 A UML diagram dispalying the classes layout:
    
-![ZLRTRzem47_FN-778DZBNbjLtKe7T6MRr5QTD4t8JOxWDh4Zsr2Wsl--inqx3eHrF8JpVVY-VdV9fT9KwdLL9ebckWHoLLAbG94FZY9ZHWj9goH9Cdl-9d8WiDN0SqKcajOhmggwX0guTj8nrVGj6JAkoGli4aA6CoGrBGnvApAgcU24ewO_644kra_e_XLOiTA6iH4i9mNehx1B1uOn0H6iaUzf9xJQAkB6slKWye2cZzP9](https://user-images.githubusercontent.com/93202645/145718328-6399b3c8-8a02-4c08-8dd4-5b3153fbe4da.png)
 
 
-  
+
+![UML Graph](https://user-images.githubusercontent.com/93202645/145817794-0cf0b574-3327-4831-b7bb-b1a73d15b29f.png)
 
 
