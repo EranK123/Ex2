@@ -52,6 +52,8 @@ public class Ex2 {
     }
 
     public static void main(String[] args) {
-        runGUI("G2.json");
+        String s = args[0];
+        runGUI(s);
+//        runGUI("G3.json");
     }
 }

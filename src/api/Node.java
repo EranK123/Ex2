@@ -29,6 +29,8 @@ public class Node implements NodeData {
     public Node(Node ot){
         this.nodeLocation = ot.nodeLocation;
         this.key = ot.key;
+        this.tag = ot.tag;
+        this.weight = ot.weight;
     }
 
     /**

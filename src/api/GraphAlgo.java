@@ -44,8 +44,8 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     /**
      * This function checks if a graph is strongly connected. i,e a graph that has a path from each vertex to every other vertex.
-     * The method uses the dfs iterative algorithm to check if the graph is connected or not. it checks using the isStronglyConnected method each and every vertex if it is connected to all other
-     * vertexes and updates it as visited. if at the end we have a boolean array filled with true values, we can say the graph is connected.
+     * The method uses the bfs iterative algorithm to check if the graph is connected or not. it checks using the isStronglyConnected method each and every vertex if it is connected to all other
+     * vertexes and updates it as visited. we set it as visited by setting the tag to 1. if at the end we have a boolean array filled with true values, we can say the graph is connected.
      *
      * @return true if it is connected. false if not
      */
@@ -54,23 +54,20 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return isStronglyConnected();
     }
 
+    /**
+     * This function uses bfs algorithm to check if the graph is connected or not.
+     * @param node - starting node
+     * @return true if we visited all the nodes i.e the node count is equal to the nodes size
+     */
     private boolean BFS(int node) {
-//        set_Tag();
-        // Mark the current node as visited and enqueue it
-        this.graph.getNode(node).setTag(1);
-//        boolean visited[] = new boolean[this.graph.nodeSize()];
-        // Create a queue for BFS
-        LinkedList<Integer> list = new LinkedList<Integer>();
-
+        this.graph.getNode(node).setTag(1);   // Mark the current node as visited and enqueue it
+        LinkedList<Integer> list = new LinkedList<>();// Create a queue for BFS
         list.add(node);
-        int count_of_nodes = 1;
+        int nodeCount = 1; // we counted 1 node as visited
         while (list.size() != 0) {
-            // Dequeue a vertex from queue and print it
-            int n = list.poll();
-//            System.out.print(s+" ");
-
+            int n = list.poll(); // Dequeue a vertex from queue and print it
             // Get all adjacent vertices of the dequeued vertex s
-            // If a adjacent has not been visited, then mark it
+            // If an adjacent node has not been visited, then mark it as
             // visited and enqueue it
             Iterator<EdgeData> edges = this.graph.edgeIter(n);
             while (edges.hasNext()) {
@@ -79,35 +76,30 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
                 if (this.graph.getNode(nodeData_dest).getTag() != 1) {
                     this.graph.getNode(nodeData_dest).setTag(1);
                     list.add(this.graph.getNode(nodeData_dest).getKey());
-                    count_of_nodes++;
-//                    visited[node.getKey()] = true;
-//                    list.add(node.getKey());
+                    nodeCount++;
                 }
             }
         }
-        if (count_of_nodes != this.graph.nodeSize()) {
-            return false;
-        }
-        return true;
+        return nodeCount == this.graph.nodeSize();
     }
 
+    /**
+     * This method applies the bfs algorithm on each and every one of the nodes in the graph. if we find even one node that returns false from the bfs check,
+     *  which means it is not connected, we return false.
+     * @return true or false if the graph is connected or not
+     */
     private boolean isStronglyConnected() {
-//        for (int i = 0; i < n; i++) {
-//            boolean[] visited = new boolean[n];
         Iterator<NodeData> nodeDataIterator = this.graph.nodeIter();
         while (nodeDataIterator.hasNext()) {
             NodeData nodeData = nodeDataIterator.next();
             boolean b = BFS(nodeData.getKey());
             set_Tag();
-//            for (boolean b : true) {
             if (!b) {
                 return false;
             }
-//            }
         }
         return true;
     }
-
 
     /**
      * This function computes the length of the shortest path between source node to destination node based on edges weights. It uses dijkstra algorithm to find the shortest
@@ -127,7 +119,7 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     /**
      * The dijkstra algorithm computes the shortest path between a node to every other node in the graph. It sets an array of distances where each distance first
-     * set to max value. We also set a PriorityQueue which contains the weights of the nodes. The weight of the node is the weight of the edge going in the node.
+     * set to max value. We also set a PriorityQueue which contains the weights of the nodes. The weight of the node is the weight of the edge going in the node plus the path to the node.
      * We iterate over the edges, check if a node hasn't been visited yet and compute the path between the current node to it. Then compare to the latest and update.
      *
      * @param g   - the graph
@@ -135,43 +127,9 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
      * @return array with distances values
      */
 
-//    /**
-//     * we use the algorithm in this function to check over all the neighbors of the current node
-//     *
-//     * @param node    - the node we removed from the pq
-//     * @param p       - the pq
-//     * @param dist    - the array of distances
-//     * @param visited - set that marks if nodes are visited or not
-//     */
-//    private void adj(NodeData node, PriorityQueue<NodeData> p, double[] dist, Set<NodeData> visited) {
-//        double current_dis = -1;
-//        double new_dis = -1;
-//
-//        for (Iterator<EdgeData> it = this.graph.edgeIter(node.getKey()); it.hasNext(); ) { //iterate over all edges
-//            EdgeData e = it.next(); // get the next edge
-//            NodeData node_dest = this.graph.getNode(e.getDest()); // get the neighbor
-//
-//            if (!visited.contains(node_dest)) {
-//                current_dis = this.graph.getEdge(node.getKey(), node_dest.getKey()).getWeight() + node.getWeight(); // update current dis to latest dist plus current node's weight
-//                new_dis = current_dis; //update new dis
-//                // compare the distances and update
-//                if (new_dis < node_dest.getWeight()) {
-//                    dist[node_dest.getKey()] = new_dis;
-//                    node_dest.setWeight(new_dis);
-//                    node_dest.setTag(node.getKey());
-//                }
-//                p.add(node_dest);
-//            }
-////            if (visited.contains(node_dest)) {
-////                dist[node_dest.getKey()] = 0;
-////            }
-//
-//        }
-//    }
     private void dijkstra(Graph g, NodeData src) {
-        set_Tag();
-        set_weight();
-
+        set_Tag(); //reset all the tags to -1. we are using the tags as markers for the parents in the next function shortestPath
+        set_weight(); // set weights to max value
         Set<NodeData> visited = new HashSet<>();
         PriorityQueue<NodeData> p = new PriorityQueue<>(g.nodeSize(), new Comparator<NodeData>() {
             @Override
@@ -181,43 +139,46 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         });
 
         p.add(src);
-        src.setWeight(0);
+        src.setWeight(0); //
 
-        if (!g.edgeIter(src.getKey()).hasNext()) {
+        if (!g.edgeIter(src.getKey()).hasNext()){ //check if the node is connected to other nodes
             return;
         }
 
         while (visited.size() != g.nodeSize() && p.size() > 0) {
-            NodeData node = p.remove();
-            visited.add(node);
-            adj(node, p, visited);
+            NodeData node = p.remove(); //remove the lowest weight node
+            if (!visited.contains(node)) { //check if we haven't visited it yet
+                visited.add(node);
+                adj(node, p, visited); //check paths to adjacent nodes
+            }
         }
     }
 
+    /**
+     * This function computes the path from a node to all of it's neighbors
+     * @param node - source node
+     * @param p - the PriorityQueue
+     * @param visited - the visited set
+     */
     private void adj(NodeData node, PriorityQueue<NodeData> p, Set<NodeData> visited) {
         double current_dis = -1;
         double new_dis = -1;
-
-        for (Iterator<EdgeData> it = this.graph.edgeIter(node.getKey()); it.hasNext(); ) {
+        for (Iterator<EdgeData> it = this.graph.edgeIter(node.getKey()); it.hasNext();) { //iterate over all adjacent nodes
             EdgeData e = it.next();
-            NodeData node_dest = this.graph.getNode(e.getDest());
+            NodeData node_dest = this.graph.getNode(e.getDest()); //neighbor node
 
             if (!visited.contains(node_dest)) {
-                current_dis = this.graph.getEdge(node.getKey(), node_dest.getKey()).getWeight();
-                new_dis = current_dis + node.getWeight();
+                current_dis = e.getWeight();
+                new_dis = current_dis + node.getWeight(); //calculate new dis
 
-                if (new_dis < node_dest.getWeight()) {
+                if (new_dis < node_dest.getWeight()) { // if it's lower update it as the new lowest cost path
                     node_dest.setWeight(new_dis);
-                    node_dest.setTag(node.getKey());
+                    node_dest.setTag(node.getKey()); // set the tag to its father. used in shortestPath
                 }
-                p.add(node_dest);
+                p.add(node_dest); // add to pq
             }
-//            if (visited.contains(node_dest)) {
-//                dist[node_dest.getKey()] = 0;
-//            }
         }
     }
-
     /**
      * Sets all the tags of the nodes to -1. The tags represent the parent of the node
      */
@@ -238,52 +199,61 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
     /**
      * Computes the shortest path between source node to destination node - as an ordered list of nodes. This function will use the shortestPathDist method to get all the parent
-     * nodes to each node thet compute the shortest path. It will the parents to a list and return it.
-     * and will compute the
-     *
+     * nodes to each node that computes the shortest path using the tags.
+     * It will add the parents to a list and return it.
      * @param src  - start node
      * @param dest - end node
-     * @return list of the
+     * @return list of the shortest path nodes
      */
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
-        List<NodeData> list1 = new ArrayList<>();
-        List<NodeData> list2 = new ArrayList<>();
-        shortestPathDist(src, dest);
+        List<NodeData> list1 = new ArrayList<>(); //shortest path array list from end node to start node
+        List<NodeData> list2 = new ArrayList<>(); // shortest path array list from start node to end node
+        shortestPathDist(src, dest); // compute all the tags
         int parent = dest;
-        while (parent != src) {
+        while (parent != src) { // we go back from dest to src and add each parent to the list
             list1.add(graph.getNode(parent));
             parent = graph.getNode(dest).getTag();
             dest = graph.getNode(parent).getKey();
         }
         list1.add(graph.getNode(src));
-        for (int i = 0; i < list1.size(); i++) {
+        for (int i = 0; i < list1.size(); i++) { //reverse the list
             list2.add(list1.get(list1.size() - i - 1));
         }
 
         return list2;
     }
 
+    /**
+     * This function finds the NodeData which minimizes the max distance to all the other nodes. The algorithm to finding the
+     * center is to compute all the minimal distances from each node to any other node using dijkstra. Then we will take
+     * the maximum distance of all the minimals. The node which refers to this distance is the center distance.
+     * @return the node representing the center node
+     */
     @Override
     public NodeData center() {
-        if (!isConnected()) {
+        if (!isConnected()) { //if the graph is not connected there is not a valid center
             return null;
         }
         NodeData node_center = null;
         double maxDist = Integer.MAX_VALUE;
-        Iterator<NodeData> nodeDataIterator = graph.nodeIter();
+        Iterator<NodeData> nodeDataIterator = graph.nodeIter(); //iterate over all nodes
         while (nodeDataIterator.hasNext()) {
-            int node = nodeDataIterator.next().getKey();
-            dijkstra(graph, graph.getNode(node));
-            double temp = max();
-            if (temp < maxDist) {
+            int node = nodeDataIterator.next().getKey(); //next node's key
+            dijkstra(graph, graph.getNode(node)); //apply dijkstra to find all the minimal distances
+            double temp = max(); //get the maximum distance
+            if (temp < maxDist) { // check if it's the minimal and update it.
                 maxDist = temp;
-                node_center = this.graph.getNode(node);
+                node_center = this.graph.getNode(node);// finally we get the minimal of the maximum distances
             }
         }
         return node_center;
     }
 
+    /**
+     * This function takes the maximum weight from a list of weights representing the distances to each node.
+     * @return
+     */
     private double max() {
         double maxV = Integer.MIN_VALUE;
         for (int i = 0; i < this.graph.nodeSize(); i++) {
@@ -296,15 +266,25 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
 
 
     @Override
-    public List<NodeData> tsp(List<NodeData> cities) {//O(V)O(V)O(V+ElogV) = O(V^3 + V^2ElogV)
-        if (cities.size() > this.graph.nodeSize()) {
+    public List<NodeData> tsp(List<NodeData> cities) {
+        for (int i = 0; i < cities.size(); i++) {
+            if (this.graph.getNode(cities.get(i).getKey()) == null)
+                return null;
+        }
+        if (!isConnected()){
+            return null;
+        }
+
+        if (cities.size() > this.graph.nodeSize() || cities.size() == 0){
             return null;
         }
         List<NodeData> list_cities = new ArrayList<>();
         double min_list = Integer.MAX_VALUE;
         List<NodeData> list_cities_temp = new ArrayList<>();
+        List<NodeData> list = new ArrayList<>();
         double min_list_temp = 0;
         for (int i = 0; i < cities.size(); i++) {//O(V)
+            boolean first_time = false;
             list_cities_temp.clear();//O(V)
             List<NodeData> cities_temp = new ArrayList<>();
             cities_temp.addAll(cities);//O(V)
@@ -312,36 +292,39 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
             int curr_node = i;
             int loc = i;
             while (cities_temp.size() > 1) {//O(V)
-                int key = cities_temp.get(loc).getKey();
-                cities_temp.remove(cities_temp.get(loc));
+                int key = cities_temp.get(loc).getKey();//curr_node
+                cities_temp.remove(cities_temp.get(loc));//curr_node
                 dijkstra(this.graph, this.graph.getNode(key));//(O(V+ElogV)
                 double min = Integer.MAX_VALUE;
                 for (int j = 0; j < cities_temp.size(); j++) {//O(V)
-                    if (min > this.graph.getNode(j).getWeight()) {
-                        min = this.graph.getNode(j).getWeight();
+                    if (min > this.graph.getNode(cities_temp.get(j).getKey()).getWeight()) {
+                        min = this.graph.getNode(cities_temp.get(j).getKey()).getWeight();
                         curr_node = cities_temp.get(j).getKey();
                         loc = j;
                     }
                 }
-                if (min == Integer.MAX_VALUE) {
+                if(min == Integer.MAX_VALUE){
                     break;
                 }
                 min_list_temp += min;
+
                 //save the list of the minimum path
-                List<NodeData> list = shortestPathTsp(key, curr_node);//O(V)
+                list = shortestPath_tsp(key, curr_node);//O(V)
+                if (first_time){
+                    list.remove(0);
+                }
+                first_time = true;
                 list_cities_temp.addAll(list);//O(V)
             }
-            if (min_list > min_list_temp) {
+            if(min_list > min_list_temp){
                 list_cities.clear();//O(V)
                 list_cities.addAll(list_cities_temp);//O(V)
                 min_list = min_list_temp;
             }
         }
         return list_cities;
-//    return null;
     }
-
-    public List<NodeData> shortestPathTsp(int src, int dest) {//O(V)
+    public List<NodeData> shortestPath_tsp(int src, int dest) {//O(V)
         List<NodeData> list1 = new ArrayList<>();
         List<NodeData> list2 = new ArrayList<>();
         int parent = dest;
@@ -357,6 +340,12 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return list2;
     }
 
+
+    /**
+     * This function saves a graph to a json file.
+     * @param file - the file name.
+     * @returntrue if succeeds. false if not
+     */
     @Override
     public boolean save(String file) {
         JsonObject jsonObject = new JsonObject();
@@ -414,24 +403,24 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         return object;
     }
 
+    /**
+     * This function loads a json file to a graph
+     * @param file - file name of JSON file
+     * @return true is succeeds. false if not
+     */
     @Override
     public boolean load(String file) {
         JsonParser jsonParser = new JsonParser();
         JsonParser jsonParser2 = new JsonParser();
         try {
-            //Read JSON file
             FileReader reader = new FileReader(file);
             FileReader reader2 = new FileReader(file);
-            //        JsonObject obj = (JsonObject) jsonParser.parse(reader);
             JsonReader jsonReader = new JsonReader(reader);
             JsonReader jsonReader2 = new JsonReader(reader2);
 
             JsonArray graph2 = (JsonArray) jsonParser2.parse(jsonReader2).getAsJsonObject().get("Nodes");
             graph2.forEach(node -> parseNodeObject((JsonObject) node));
             JsonArray graph = (JsonArray) jsonParser.parse(jsonReader).getAsJsonObject().get("Edges");
-
-            //        JsonArray graph = obj.getAsJsonArray();
-
             //Iterate over Edges array
             graph.forEach(edge -> parseEdgeObject((JsonObject) edge));
             //Iterate over Nodes array

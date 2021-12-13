@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class GraphTest {
 
     Graph g = new Graph();
-    HashMap<Integer, NodeData> nodes = new HashMap<>();
 
 
     @Test
@@ -192,8 +191,7 @@ class GraphTest {
         g.removeNode(0);
         assertNull(g.getNode(0));
         assertEquals(g.edgeSize(),1);
-        g.connect(3,2,1);
-        assertEquals(g.edgeSize(),2);
+
     }
 
     @Test

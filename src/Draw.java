@@ -65,7 +65,7 @@ public class Draw extends JComponent {
 
             g.setColor(Color.red);
             g.drawLine(placeSrcX, placeSrcY, placeDestX, placeDestY);
-            Font f = g.getFont().deriveFont(8.f);
+            Font f = g.getFont().deriveFont(6.f);
             g.setFont(f);
             g.drawString("" + edge.getWeight(), placeSrcX , placeDestY);
 
@@ -76,5 +76,4 @@ public class Draw extends JComponent {
     public Graph getGraph() {
         return (Graph) this.graphAlgo.getGraph();
     }
-
 }

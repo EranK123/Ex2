@@ -17,7 +17,8 @@ import javax.swing.JMenuItem;
 class Menu extends JMenuBar {
     private GraphAlgo graphAlgo;
     private JMenuBar menuBar;
-    public Menu(Graph g){
+
+    public Menu(Graph g) {
         this.graphAlgo = new GraphAlgo(g);
 
         initUI();
@@ -28,13 +29,10 @@ class Menu extends JMenuBar {
     }
 
     private void initUI() {
-
         createMenuBar();
-
         setVisible(true);
         setSize(500, 500);
-//        setLocationRelativeTo(null);
-//        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
     }
 
     private void createMenuBar() {
@@ -62,68 +60,24 @@ class Menu extends JMenuBar {
         buttonLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                JFrame frame = new JFrame();
-//                JPanel panel = new JPanel();
-//                panel.setSize(50, 50);
-//                frame.setSize(300, 300);
-//                panel.setVisible(true);
-//                frame.setVisible(true);
-//                JLabel label = new JLabel("Enter File Name");
-//                JTextField tf = new JTextField(10);
-//                String s = tf.getText();
                 JFileChooser fileChooser = new JFileChooser();
-                int r = fileChooser.showOpenDialog(null);
-//                if (r == JFileChooser.APPROVE_OPTION){
-//                    File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-//                    System.out.println(file);
-//                    graphAlgo.load("" + file);
-//                    GUI gui = new GUI(graphAlgo);
-//                    gui.run();
-//                }
+                int r = fileChooser.showOpenDialog(buttonLoad);
                 if (r == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
+                    File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                    Ex2.runGUI(file.getAbsolutePath());
                 }
-
-
-//                JButton enter = new JButton("Send");
-//                enter.addActionListener(new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        graphAlgo.load(s);
-//                        GUI gui = new GUI(graphAlgo);
-//                        gui.run();
-//                    }
-//                });
-//                panel.add(label);
-//                panel.add(enter);
-//                panel.add(tf);
-//                frame.add(panel);
             }
         });
 
         buttonSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
-                JPanel panel = new JPanel();
-                panel.setSize(50, 50);
-                frame.setSize(400, 400);
-                panel.setVisible(true);
-                frame.setVisible(true);
-                JLabel label = new JLabel("Enter File Name");
-                JTextField tf = new JTextField(30);
-                String s = tf.getText();
-                JButton send = new JButton("Send");
-                send.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        graphAlgo.save(s);
-                    }
-                });
-                panel.add(label);
-                panel.add(send);
-                panel.add(tf);
-                frame.add(panel);
+                JFileChooser fileChooser = new JFileChooser();
+                int r = fileChooser.showSaveDialog(null);
+                if (r == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                        graphAlgo.save(file.getAbsolutePath());
+                }
             }
         });
         buttonEdit.addActionListener(e -> {
@@ -154,8 +108,8 @@ class Menu extends JMenuBar {
                 panelPos.setVisible(true);
                 JLabel labelID = new JLabel("Enter ID");
                 JLabel labelPos = new JLabel("Enter Pos");
-                JTextField tfID = new JTextField(20);
-                JTextField tfPos = new JTextField(20);
+                JTextField tfID = new JTextField(10);
+                JTextField tfPos = new JTextField(10);
                 JButton send = new JButton("Send");
                 send.setSize(30, 30);
                 send.addActionListener(new ActionListener() {
@@ -230,9 +184,9 @@ class Menu extends JMenuBar {
                 JLabel labelSource = new JLabel("Enter source");
                 JLabel labelDest = new JLabel("Enter dest");
                 JLabel labelWeight = new JLabel("Enter weight");
-                JTextField tfSource = new JTextField(10);
-                JTextField tfDest = new JTextField(10);
-                JTextField tfWeight = new JTextField(10);
+                JTextField tfSource = new JTextField(5);
+                JTextField tfDest = new JTextField(5);
+                JTextField tfWeight = new JTextField(5);
                 JButton send = new JButton("Send");
                 send.addActionListener(new ActionListener() {
                     @Override
@@ -240,7 +194,7 @@ class Menu extends JMenuBar {
                         int source = Integer.parseInt(tfSource.getText());
                         int dest = Integer.parseInt(tfDest.getText());
                         double weight = Double.parseDouble(tfWeight.getText());
-                        graphAlgo.getGraph().connect(source,dest,weight);
+                        graphAlgo.getGraph().connect(source, dest, weight);
                         GUI gui = new GUI(graphAlgo);
                         gui.run();
                     }
@@ -280,8 +234,7 @@ class Menu extends JMenuBar {
                     public void actionPerformed(ActionEvent e) {
                         int source = Integer.parseInt(tfSource.getText());
                         int dest = Integer.parseInt(tfDest.getText());
-                        EdgeData edgeData = graphAlgo.getGraph().removeEdge(source,dest);
-                        System.out.println(edgeData);
+                        graphAlgo.getGraph().removeEdge(source, dest);
                         GUI gui = new GUI(graphAlgo);
                         gui.run();
                     }
@@ -315,15 +268,15 @@ class Menu extends JMenuBar {
                 isConnected.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                       boolean is = graphAlgo.isConnected();
-                       new DisplayMessage("" + is);
+                        boolean is = graphAlgo.isConnected();
+                        new DisplayMessage("" + is);
                     }
                 });
                 shortestPathDist.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JFrame frame2= new JFrame();
-                        frame2.setSize(400,400);
+                        JFrame frame2 = new JFrame();
+                        frame2.setSize(400, 400);
                         frame2.setVisible(true);
                         JPanel panel2 = new JPanel(new GridLayout());
                         JPanel panelSource = new JPanel();
@@ -342,7 +295,7 @@ class Menu extends JMenuBar {
                             public void actionPerformed(ActionEvent e) {
                                 int source = Integer.parseInt(tfSource.getText());
                                 int dest = Integer.parseInt(tfDest.getText());
-                                double path = graphAlgo.shortestPathDist(source,dest);
+                                double path = graphAlgo.shortestPathDist(source, dest);
                                 new DisplayMessage("" + path);
                             }
                         });
@@ -360,8 +313,8 @@ class Menu extends JMenuBar {
                 shortestPath.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JFrame frame2= new JFrame();
-                        frame2.setSize(400,400);
+                        JFrame frame2 = new JFrame();
+                        frame2.setSize(400, 400);
                         frame2.setVisible(true);
                         JPanel panel2 = new JPanel(new GridLayout());
                         JPanel panelSource = new JPanel();
@@ -380,14 +333,14 @@ class Menu extends JMenuBar {
                             public void actionPerformed(ActionEvent e) {
                                 int source = Integer.parseInt(tfSource.getText());
                                 int dest = Integer.parseInt(tfDest.getText());
-                                List<NodeData> list = graphAlgo.shortestPath(source,dest);
+                                List<NodeData> list = graphAlgo.shortestPath(source, dest);
                                 int[] keys = new int[list.size()];
                                 for (int i = 0; i < keys.length; i++) {
                                     keys[i] = list.get(i).getKey();
                                 }
                                 String s = "";
                                 for (int i = 0; i < keys.length; i++) {
-                                     s += keys[i] + "->";
+                                    s += keys[i] + "->";
                                 }
                                 new DisplayMessage(s);
                             }
@@ -405,7 +358,7 @@ class Menu extends JMenuBar {
                 center.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                       NodeData n = graphAlgo.center();
+                        NodeData n = graphAlgo.center();
                         new DisplayMessage("" + n.getKey());
                     }
                 });
@@ -431,10 +384,15 @@ class Menu extends JMenuBar {
                                     int id = Integer.parseInt(ids[i]);
                                     cities.add(graphAlgo.getGraph().getNode(id));
                                 }
-                               List<NodeData> list = graphAlgo.tsp(cities);
+                                List<NodeData> list = graphAlgo.tsp(cities);
+                                for (int i = 0; i < list.size(); i++) {
+                                    System.out.print(list.get(i).getKey());
+                                }
+                                System.out.println();
                                 int[] keys = new int[list.size()];
                                 for (int i = 0; i < keys.length; i++) {
                                     keys[i] = list.get(i).getKey();
+                                    System.out.print(keys[i] + " ");
                                 }
                                 String s1 = "";
                                 for (int i = 0; i < keys.length; i++) {
@@ -460,7 +418,7 @@ class Menu extends JMenuBar {
         });
     }
 
-    public JMenuBar getMenuBar(){
+    public JMenuBar getMenuBar() {
         return this.menuBar;
     }
 
