@@ -263,8 +263,18 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         }
         return maxV;
     }
-
-
+    
+   /**
+     check if the cities list contained in the graph
+     calculate path using dijkstra from node in the list to another one after im found
+     the shortest(weight) removing him from the list and calculate again from
+     the end of the path and adding the the new path(weight) to the list
+     and the weight to variable min_list_temp
+     doing this for all the nodes in the cities list
+     if im found better path(lower weight) im changing the list
+     * @param cities
+     * @return the shortest list
+     */
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
         for (int i = 0; i < cities.size(); i++) {
@@ -324,6 +334,14 @@ public class GraphAlgo implements DirectedWeightedGraphAlgorithms {
         }
         return list_cities;
     }
+    /**
+     * Computes the shortest path between source node to destination node - as an ordered list of nodes. This function will use the shortestPathDist method to get all the parent
+     * nodes to each node that computes the shortest path using the tags.
+     * It will add the parents to a list and return it.
+     * @param src  - start node
+     * @param dest - end node
+     * @return list of the shortest path nodes
+     */
     public List<NodeData> shortestPath_tsp(int src, int dest) {//O(V)
         List<NodeData> list1 = new ArrayList<>();
         List<NodeData> list2 = new ArrayList<>();
