@@ -386,13 +386,10 @@ class Menu extends JMenuBar {
                                 }
                                 List<NodeData> list = graphAlgo.tsp(cities);
                                 for (int i = 0; i < list.size(); i++) {
-                                    System.out.print(list.get(i).getKey());
                                 }
-                                System.out.println();
                                 int[] keys = new int[list.size()];
                                 for (int i = 0; i < keys.length; i++) {
                                     keys[i] = list.get(i).getKey();
-                                    System.out.print(keys[i] + " ");
                                 }
                                 String s1 = "";
                                 for (int i = 0; i < keys.length; i++) {
