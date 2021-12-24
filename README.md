@@ -35,7 +35,7 @@ We will use the Dijkstra Algorithm. This algorithm finds the shortest path betwe
 *center* - Returns the Node center of the graph. The center of a graph is the set of all vertices of minimum eccentricity, that is, the set of all vertices u where the greatest distance (weight) d(u,v) to other vertices v is minimal. Thus vertices in the center minimize the maximal distance from other points in the graph.
 We will use the dijkstra method of each node to compute the distances to all nodes in the graph. 
 
-*tsp* - given a list of nodes called cities, a sub list of nodes in the graph, the method computes a list of consecutive nodes which go over all the nodes in cities. The sum of the weights of all the consecutive (pairs) of nodes is the "cost" of the solution. //TBA
+*tsp* - given a list of nodes called cities, a sub list of nodes in the graph, the method computes a list of consecutive nodes which go over all the nodes in cities. The sum of the weights of all the consecutive (pairs) of nodes is the "cost" of the solution. 
 
 *save* - saves the weighted graph to a json file given by the function. Returning true if successful, false if not.
 
